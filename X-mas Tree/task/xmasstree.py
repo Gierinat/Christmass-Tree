@@ -5,7 +5,7 @@ LAST_CHARACTER = "\\"
 TOP_CHARACTER = "^"
 VERY_TOP_CHARACTER = "X"
 BOTTOM_CHARACTER = "| |"
-TRINKET_CHARACTER = "O"
+TRINKET_CHARACTER = "$"
 
 
 def draw(lines, interval):
