@@ -14,34 +14,38 @@ sig_start = (COLS - len(SIGNATURE)) // 2
 arr = [[" " for i in range(COLS)] for j in range(ROWS)]
 
 
-def draw(lines, interval):
-    print(" " * (lines - 1), VERY_TOP_CHARACTER, sep='')
+def draw_tree(lines, interval):
+    arr[1][lines] = VERY_TOP_CHARACTER
 
     counter = 0
-    for line in range(1, lines + 1):
-        blanks_each_side = lines - line
+    for line in range(2, lines + 2):
+        blanks_each_side = lines - line + 2
         signs_for_line = 2 * line - 1
 
-        if line == 1:
-            print(" " * blanks_each_side, TOP_CHARACTER * signs_for_line, sep='')
+        if line == 2:
+            arr[line][blanks_each_side] = TOP_CHARACTER
         else:
-            print(" " * blanks_each_side, FIRST_CHARACTER, sep='', end='')
-            for i in range(0, (signs_for_line - 2)):
-                if i % 2 == 1:
-                    if counter % interval == 0:
-                        print(TRINKET_CHARACTER, sep='', end='')
+            arr[line][blanks_each_side] = FIRST_CHARACTER
+            for i in range(0, (signs_for_line - 4)):
+                if (i + 1) % 2 != 0:
+                    arr[line][blanks_each_side + 1 + i] = CHARACTER
+                else:
+                    if counter % interval == 0 or counter == 0:
+                        arr[line][blanks_each_side + 1 + i] = TRINKET_CHARACTER
                         counter = counter + 1
                     else:
-                        print(CHARACTER, sep='', end='')
+                        arr[line][blanks_each_side + 1 + i] = CHARACTER
                         counter = counter + 1
-                else:
-                    print(CHARACTER, sep='', end='')
-                    # counter = counter + 1
-            print(LAST_CHARACTER, sep='')
 
-    print(" " * (lines - 2), BOTTOM_CHARACTER, sep='')
+            arr[line][blanks_each_side + signs_for_line - 3] = LAST_CHARACTER
+
+    arr[lines + 2][(lines - 1):(lines + 1)] = BOTTOM_CHARACTER
+
 
 def draw_array(lines, interval):
+    # trees
+    draw_tree(lines, interval)
+
     # borders
     for row_num in range(ROWS):
         for i in range(COLS):
@@ -57,6 +61,7 @@ def draw_array(lines, interval):
             for i in range(COLS):
                 arr[ROWS - 1][i] = "#"
 
+
     for row in arr:
         for sign in row:
             print(sign, end='')
@@ -71,7 +76,7 @@ def main():
             height = int(height)
             interval = int(interval)
             if height >= MIN_LINES:
-                draw(height, interval)
+                draw_array(height, interval)
             else:
                 print(f"Wrong input. Must be at least {MIN_LINES}.")
         elif len(params) % 4 == 0:
@@ -80,8 +85,8 @@ def main():
                 interval = params.pop(0)
                 line = params.pop(0)
                 column = params.pop(0)
-                # height = int(height)
-                # interval = int(interval)
+                height = int(height)
+                interval = int(interval)
                 print(height, interval, line, column)
                 # draw_array(height, interval)
 
