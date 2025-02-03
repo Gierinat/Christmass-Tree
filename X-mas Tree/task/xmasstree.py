@@ -36,15 +36,14 @@ def draw_single(lines, interval):
                         counter = counter + 1
                 else:
                     print(CHARACTER, sep='', end='')
-                    # counter = counter + 1
             print(LAST_CHARACTER, sep='')
 
     print(" " * (lines - 2), BOTTOM_CHARACTER, sep='')
 
 
 def draw_tree(lines, interval, start_row, start_col):
-    start_r = start_row  # + 1
-    start_c = start_col  # + lines
+    start_r = start_row
+    start_c = start_col
     arr[start_r][start_c] = VERY_TOP_CHARACTER
     counter = 0
     for line in range(2, lines + 2):
@@ -69,7 +68,6 @@ def draw_tree(lines, interval, start_row, start_col):
 
             arr[line_r][blanks_each_side + signs_for_line - 3] = LAST_CHARACTER
 
-    # arr[start_r + lines + 2][(start_c - 1):(start_c)] = BOTTOM_CHARACTER
     i = -1
     for char in BOTTOM_CHARACTER:
         arr[start_r + lines + 1][start_c + i] = char
@@ -134,5 +132,3 @@ def param_check(params):
 
 if __name__ == "__main__":
     main()
-
-
